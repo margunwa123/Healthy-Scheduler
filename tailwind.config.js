@@ -1,7 +1,22 @@
 module.exports = {
-  purge: [],
+  purge: {
+    content: ['./src/**/*.jsx', './src/**/*.tsx'],
+    safelist: [
+      /^bg-/,
+      /^text-/,
+      /^btn-/,
+      /^border-/,
+      /^space-x-/,
+      /^space-y-/,
+      'hidden',
+    ],
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
+    boxShadow: {
+      panel: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    },
+
     colors: {
       link: '#0054B7',
       green: {
@@ -9,7 +24,7 @@ module.exports = {
       },
       red: {
         DEFAULT: '#DD0000',
-        light: '#FFE6EC',
+        light: '#FFE6E6',
       },
       blue: {
         DEFAULT: '#06B7DB',
@@ -17,7 +32,7 @@ module.exports = {
       },
       grey: {
         DEFAULT: '#888888',
-        light: '#EDEDED',
+        light: '#CCCCCC',
         lighter: '#f8f8f8',
       },
       orange: {
@@ -27,40 +42,57 @@ module.exports = {
       muted: '#BABABA',
 
       // blue
+      // primaryt
+      'primary-light': '#E8FBFF',
       primary: '#06B7DB',
       'primary-darker': '	#0593af',
 
-      // blue-light
-      'primary-light': '#E8FBFF',
-      'primary-light-darker': '#06B7DB',
-
-      // orange
+      // warning
       'warning-light': '#fef5e6',
       warning: '#F7A01D',
       'warning-darker': '#c68017',
 
-      // red
+      // danger
+      'danger-light': '#f5d5da',
       danger: '#CF2D48',
       'danger-darker': '#a6243a',
 
       // green
+      'success-light': '#ebf2d1',
       success: '#9CBC1A',
       'success-darker': '#7d9615',
 
       // light-grey
+      'muted-light': '#f1f1f1',
       muted: '#BABABA',
       'muted-darker': '#959595',
+
+      'white-light': '#FFFFFF',
       white: '#FFFFFF',
       'white-darker': '#EEEEEE',
+
+      'dark-light': '#d3d3d3',
       dark: '#232323',
+      'dark-darker': '#000000',
+
+      link: '#0047D1',
+    },
+
+    fontSize: {
+      xs: '12px',
+      sm: '14px',
+      base: '16px',
+      lg: '24px',
+      xl: '32px',
+      '2xl': '48px',
     },
 
     extend: {
       margin: {
-        default: '12.5px',
+        default: '4rem',
       },
       padding: {
-        default: '12.5px',
+        default: '4rem',
       },
       width: {
         112: '28rem',
