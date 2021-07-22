@@ -7,8 +7,14 @@ interface ActivityActionType extends DispatchActionType {
     | 'delete_activity'
     | 'delete_activity_group'
     | 'edit_activity'
-    | 'edit_activity_group';
-  payload?: ActivityGroup | Activity | ActivityPayload;
+    | 'edit_activity_group'
+    | 'initiate';
+  payload?:
+    | ActivityGroup
+    | Activity
+    | ActivityPayload
+    | ActivityGroup[]
+    | DeleteGroupPayload;
 }
 
 interface ActivitiesState {
@@ -33,9 +39,6 @@ const reducer = (
 ): ActivitiesState => {
   switch (action.type) {
     case 'add_activity_group': {
-      if (!(action.payload as ActivityGroup).activities) {
-        return state;
-      }
       return {
         activityGroups: [
           ...state.activityGroups,
@@ -43,14 +46,18 @@ const reducer = (
         ],
       };
     }
-    case 'delete_activity_group': {
-      if (!(action.payload as ActivityGroup).activities) {
+    case 'initiate': {
+      if ((action.payload as ActivityGroup[]).length === 0) {
         return state;
       }
       return {
+        activityGroups: action.payload as ActivityGroup[],
+      };
+    }
+    case 'delete_activity_group': {
+      return {
         activityGroups: state.activityGroups.filter(
-          (actGroup) =>
-            actGroup.title === (action.payload as ActivityGroup).title
+          (actGroup) => actGroup.id !== (action.payload as ActivityGroup).id
         ),
       };
     }
@@ -62,7 +69,7 @@ const reducer = (
       }
       return {
         activityGroups: state.activityGroups.map((actGroup) => {
-          if (actGroup.title === payload.title) {
+          if (actGroup.id === payload.id) {
             return payload;
           }
           return actGroup;
@@ -73,7 +80,7 @@ const reducer = (
       return {
         activityGroups: state.activityGroups.map((actGroup) => {
           const payload = action.payload as ActivityPayload;
-          if (payload.activityGroupTitle === actGroup.title) {
+          if (payload.groupId === actGroup.id) {
             return {
               ...actGroup,
               activities: [...actGroup.activities, payload.activity],
@@ -87,11 +94,11 @@ const reducer = (
       return {
         activityGroups: state.activityGroups.map((actGroup) => {
           const payload = action.payload as ActivityPayload;
-          if (payload.activityGroupTitle === actGroup.title) {
+          if (payload.groupId === actGroup.id) {
             return {
               ...actGroup,
               activities: actGroup.activities.filter(
-                (activity) => activity.title !== payload.activity.title
+                (activity) => activity.id !== payload.activity.id
               ),
             };
           }
@@ -103,11 +110,11 @@ const reducer = (
       return {
         activityGroups: state.activityGroups.map((actGroup) => {
           const payload = action.payload as ActivityPayload;
-          if (payload.activityGroupTitle === actGroup.title) {
+          if (payload.groupId === actGroup.id) {
             return {
               ...actGroup,
               activities: actGroup.activities.map((activity) => {
-                if (activity.title === payload.activity.title) {
+                if (activity.id === payload.activity.id) {
                   return payload.activity;
                 }
                 return activity;

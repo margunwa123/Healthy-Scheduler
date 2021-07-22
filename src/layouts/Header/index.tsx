@@ -8,11 +8,6 @@ import PulseHelpButton from '@/components/PulseHelpButton';
 interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
-  const [hasSeenHelp, setHasSeenHelp] = useLocalStorage('has-seen-help', false);
-  const [openHelpModal, setOpenHelpModal] = useState(false);
-
-  const toggleOpenModal = () => setOpenHelpModal(!openHelpModal);
-
   return (
     <div className="relative">
       <img
@@ -26,7 +21,7 @@ const Header: FC<HeaderProps> = () => {
       <div className="absolute top-0 left-0 w-full pt-8 lg:pt-4 pl-4 lg:pl-default font-bold ">
         <div className="flex space-x-8 text-xl lg:text-2xl items-center">
           <h1>Healthy Scheduler</h1>
-          <PulseHelpButton onClick={toggleOpenModal} />
+          <PulseHelpButton />
         </div>
       </div>
     </div>

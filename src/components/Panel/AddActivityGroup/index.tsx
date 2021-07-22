@@ -1,10 +1,14 @@
 import React, { FC } from 'react';
-import Button from '../Button';
-import Panel from '../Panel';
-import ActivityPanel from '../Panel/ActivityPanel';
+import Button from '../../Button';
+import Panel from '..';
+import ActivityPanel from '../ActivityPanel';
 import * as Icon from 'react-feather';
 
-const AddActivityGroup: FC = () => {
+interface AddActivityGroupProps {
+  onClickAdd: React.MouseEventHandler;
+}
+
+const AddActivityGroup: FC<AddActivityGroupProps> = ({ onClickAdd }) => {
   return (
     <Panel
       style={{
@@ -15,6 +19,7 @@ const AddActivityGroup: FC = () => {
       bgWhite={false}
       shadow={false}
       className="space-y-5 font-medium flex justify-center items-center hover:bg-white-darker transition-colors cursor-pointer"
+      onClick={onClickAdd}
     >
       + Add activity group
     </Panel>

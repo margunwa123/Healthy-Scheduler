@@ -5,25 +5,33 @@ import * as Icon from 'react-feather';
  * Modal Properties
  */
 export interface ModalProps {
+  open?: boolean;
   title?: string;
-  onClickClose?: React.MouseEventHandler;
+  onClickClose?: () => void;
 }
 
 /**
  * Modal Properties
  */
-const Modal: FC<ModalProps> = ({ title, onClickClose, children }) => {
+const Modal: FC<ModalProps> = ({
+  title,
+  onClickClose,
+  children,
+  open = true,
+}) => {
   return (
     <div
-      className="fixed flex justify-center items-center top-0 left-0 w-screen h-screen z-50"
+      className={`${
+        open ? 'scale-y-100' : 'scale-y-0'
+      } transform origin-top transition-all fixed flex justify-center items-center top-0 left-0 w-screen h-screen z-50"`}
       style={{
         background: 'rgba(0,0,0,0.4)',
       }}
     >
       <div
-        className="px-4 w-full"
+        className={`px-4 w-full z-20`}
         style={{
-          maxWidth: '500px',
+          maxWidth: '1000px',
         }}
       >
         <div className="w-full bg-white rounded-lg ">
@@ -36,8 +44,8 @@ const Modal: FC<ModalProps> = ({ title, onClickClose, children }) => {
 };
 
 interface ModalHeaderProps {
-  title: string;
-  onClickClose: React.MouseEventHandler;
+  title?: string;
+  onClickClose?: React.MouseEventHandler;
 }
 
 /**

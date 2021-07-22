@@ -1,15 +1,52 @@
-import { ActivitiesProvider } from '@/reducers/ActivityReducer';
+import useLocalStorage from '@/hooks/useLocalStorage';
+import {
+  ActivitiesProvider,
+  useActivities,
+  useDispatchActivities,
+} from '@/reducers/ActivityReducer';
 import '@styles/globals.css';
 
 import { AppProps } from 'next/dist/next-server/lib/router/router';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
+  const dispatchActivity = useDispatchActivities();
+  const { activityGroups } = useActivities();
+  const [actGroups, setActGroups] = useLocalStorage<ActivityGroup[]>(
+    'activity-groups',
+    []
+  );
+
+  useEffect(() => {
+    if (actGroups && actGroups !== []) {
+      dispatchActivity({
+        type: 'initiate',
+        payload: actGroups,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    setActGroups(activityGroups);
+  }, [activityGroups]);
+
+  return <Component {...pageProps} />;
+};
+
+const AppWithProviders: FC<AppProps> = (props) => {
   return (
-    <ActivitiesProvider activityGroups={[]}>
-      <Component {...pageProps} />
+    <ActivitiesProvider
+      activityGroups={[
+        {
+          title: 'Every 1 hour',
+          activities: [],
+          type: 'hourly',
+        },
+      ]}
+    >
+      <MyApp {...props} />
     </ActivitiesProvider>
   );
 };
 
-export default MyApp;
+export default AppWithProviders;

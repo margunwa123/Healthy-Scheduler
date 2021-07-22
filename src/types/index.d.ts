@@ -1,16 +1,18 @@
+type Variant = 'success' | 'danger' | 'warning' | 'white' | 'muted' | 'primary';
 interface Activity {
+  id: string;
   title: string;
   notif?: boolean;
   description?: string;
   image?: string;
   url?: string;
-  deadline?: Date;
+  deadline?: number;
 }
 
 interface ScheduledActivity extends Activity {}
 
 interface OneTimeActivity extends Activity {
-  deadline: Date;
+  deadline: number;
 }
 
 type Day = 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun';
@@ -18,6 +20,7 @@ type Day = 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun';
 type ActivityGroupType = 'daily' | 'hourly' | 'one-time';
 
 interface ActivityGroup {
+  id: string;
   title: string;
   type: ActivityGroupType;
   activities: Activity[];
@@ -57,7 +60,15 @@ interface ReducerDispatchAction<T = DispatchActionType> {
   (action: T): void;
 }
 
-interface ActivityPayload {
-  activityGroupTitle: string;
+type ActivityPayload = {
+  groupId: string;
   activity: Activity;
+};
+
+type DeleteGroupPayload = {
+  id: string;
+};
+
+interface AnyObject {
+  [key: string]: any;
 }

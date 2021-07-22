@@ -1,21 +1,31 @@
-import React, { FC } from 'react';
-import * as Icon from 'react-feather';
+import React, { FC, useState } from 'react';
+
 import ProgressBar from '@/components/ProgressBar';
-import Panel from '@/components/Panel';
-import ActivityPanel from '..';
+
+import ActivityPanel from '../';
+import { formatTimeLeft, getClockTimeInMillis } from '@/helpers/time';
+import { useModal } from '@/context/ModalContext';
 
 interface OneTimeActivityPanelProps extends Activity {
-  deadline: Date;
+  deadline: number;
 }
 
 const OneTimeActivityPanel: FC<OneTimeActivityPanelProps> = ({
   deadline,
   ...props
 }) => {
+  const [timeLeft, setTimeLeft] = useState(
+    deadline - getClockTimeInMillis(new Date())
+  );
+
   return (
-    <ActivityPanel {...props}>
-      <p className="text-muted-darker text-sm">13 menit lagi</p>
-      <ProgressBar progressInPercentage={30} />
+    <ActivityPanel {...props} deadline={deadline}>
+      <div>
+        <p className="text-muted-darker text-sm">
+          {formatTimeLeft(timeLeft)} tersisa
+        </p>
+        <ProgressBar progressInPercentage={30} />
+      </div>
     </ActivityPanel>
   );
 };

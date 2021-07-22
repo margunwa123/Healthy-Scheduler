@@ -2,20 +2,29 @@ import React, { FC, useState } from 'react';
 import Panel from '..';
 import * as Icon from 'react-feather';
 import ProgressBar from '@/components/ProgressBar';
+import { useModal } from '@/context/ModalContext';
 
-const ActivityPanel: FC<Activity> = ({
-  title,
-  notif = true,
-  description,
-  image,
-  url,
-  children,
-}) => {
+const ActivityPanel: FC<Activity> = (activity) => {
+  const { title, notif = true, description, image, url, children } = activity;
   const [openImageModal, setOpenImageModal] = useState<boolean>(false);
   const toggleImageModal = () => setOpenImageModal(!openImageModal);
 
+  const { toggleOpen: toggleEditModal, setModalData: setEditData } = useModal();
+
   return (
-    <Panel shadow={false} className="space-y-4">
+    <Panel
+      shadow={false}
+      className="space-y-4 mt-4 cursor-pointer"
+      onClick={() => {
+        console.log(activity);
+        if (setEditData) {
+          setEditData(activity);
+        }
+        if (toggleEditModal) {
+          toggleEditModal(true);
+        }
+      }}
+    >
       <ActivityPanelHeader notif={notif} title={title} />
       {url && <a className="text-link">{url}</a>}
       {image && (
@@ -36,6 +45,7 @@ const ActivityPanel: FC<Activity> = ({
       ) : (
         <p className="italic text-sm text-muted">No description</p>
       )}
+      {children}
     </Panel>
   );
 };
