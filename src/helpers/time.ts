@@ -13,7 +13,7 @@ export const formatHHMMSSToMillis = (timeInHHMMSS: string) => {
   if (HH == null || MM == null || SS == null) {
     throw Error('Time format is not correct');
   }
-  return HH * ONE_HOUR + MM * ONE_MINUTE * SS * ONE_SECOND;
+  return HH * ONE_HOUR + MM * ONE_MINUTE + SS * ONE_SECOND;
 };
 
 export const formatMillisToHHMMSS = (millis: number) => {

@@ -70,7 +70,6 @@ const EditOneTimeActivityModal: FC<EditOneTimeActivityModalProps> = ({
           <br />
           <textarea
             className="border outline-none px-1 py-2 rounded-md border-grey-light w-full"
-            id="description"
             name="description"
             placeholder="This is a description"
             rows={3}

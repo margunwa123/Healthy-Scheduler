@@ -1,20 +1,22 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import AddActivityGroup from '@/components/Panel/AddActivityGroup';
+import CreateActivityGroupModal from '@/components/Modal/CreateActivityGroupModal';
 import DailyActivityGroupPanel from '@/components/Panel/ActivityGroup/DailyActivityGroup';
 import HourlyActivityGroupPanel from '@/components/Panel/ActivityGroup/HourlyActivityGroup';
 import OneTimeActivityGroupPanel from '@/components/Panel/ActivityGroup/OneTimeActivityGroup';
+import AddActivityGroup from '@/components/Panel/AddActivityGroup';
 import MainLayout from '@/layouts/MainLayout';
 import { useActivities } from '@/reducers/ActivityReducer';
-import Modal from '@/components/Modal';
-import CreateActivityGroupModal from '@/components/Modal/CreateActivityGroupModal';
 
 const Home: NextPage = () => {
   const { activityGroups } = useActivities();
   const [openCreateGroupModal, setOpenCreateGroupModal] =
     useState<boolean>(false);
+  useEffect(() => {
+    Notification.requestPermission();
+  }, []);
 
   const toggleOpenModal = () => {
     setOpenCreateGroupModal(!openCreateGroupModal);

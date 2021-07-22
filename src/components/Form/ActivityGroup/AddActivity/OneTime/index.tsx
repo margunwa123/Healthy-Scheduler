@@ -5,7 +5,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { v4 } from 'uuid';
 import Form, { FormProps } from '../../..';
 
-const OneTimeActivityGroupForm: FC<FormProps> = ({ onSubmit, ...props }) => {
+const OneTimeActivityGroupForm: FC<FormProps> = ({ ...props }) => {
   const dispatchActivity = useDispatchActivities();
 
   const createOneTimeActivityGroup: (item: AnyObject) => void = (item) => {

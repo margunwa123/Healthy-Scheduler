@@ -3,48 +3,43 @@ import Panel from '..';
 import * as Icon from 'react-feather';
 import ProgressBar from '@/components/ProgressBar';
 import { useModal } from '@/context/ModalContext';
+import Modal from '@/components/Modal';
+import Button from '@/components/Button';
+import { useDispatchActivities } from '@/reducers/ActivityReducer';
 
-const ActivityPanel: FC<Activity> = (activity) => {
+export interface ActivityPanelProps extends Activity {
+  groupId: string;
+}
+
+const ActivityPanel: FC<ActivityPanelProps> = ({ groupId, ...activity }) => {
   const { title, notif = true, description, image, url, children } = activity;
-  const [openImageModal, setOpenImageModal] = useState<boolean>(false);
-  const toggleImageModal = () => setOpenImageModal(!openImageModal);
-
-  const { toggleOpen: toggleEditModal, setModalData: setEditData } = useModal();
 
   return (
-    <Panel
-      shadow={false}
-      className="space-y-4 mt-4 cursor-pointer"
-      onClick={() => {
-        console.log(activity);
-        if (setEditData) {
-          setEditData(activity);
-        }
-        if (toggleEditModal) {
-          toggleEditModal(true);
-        }
-      }}
-    >
-      <ActivityPanelHeader notif={notif} title={title} />
-      {url && <a className="text-link">{url}</a>}
-      {image && (
-        <div
-          className="p-1 border border-grey-light cursor-pointer rounded-full"
-          onClick={toggleImageModal}
-        >
-          <Icon.Image color="#797979" />
-          <p className="text-grey">View Image</p>
+    <Panel shadow={false} className="space-y-3 mt-4">
+      <ActivityPanelHeader
+        activity={activity}
+        notif={notif}
+        title={title}
+        groupId={groupId}
+      />
+      {description ? (
+        <div>
+          <p
+            className="text-sm text-dark"
+            dangerouslySetInnerHTML={{
+              __html: description,
+            }}
+          ></p>
+        </div>
+      ) : null}
+      {url && (
+        <div>
+          <a className="text-link text-sm" href={url} target="_blank">
+            <Icon.Link2 size={14} /> Visit Link
+          </a>
         </div>
       )}
-      {description ? (
-        <p
-          dangerouslySetInnerHTML={{
-            __html: description,
-          }}
-        ></p>
-      ) : (
-        <p className="italic text-sm text-muted">No description</p>
-      )}
+      {image && <ImageModalComponent image={image} />}
       {children}
     </Panel>
   );
@@ -52,22 +47,103 @@ const ActivityPanel: FC<Activity> = (activity) => {
 
 interface ActivityPanelHeaderProps {
   title: string;
-  notif?: boolean;
+  notif: boolean;
+  groupId: string;
+  activity: Activity;
 }
 
 const ActivityPanelHeader: FC<ActivityPanelHeaderProps> = ({
   notif,
   title,
+  activity,
+  groupId,
 }) => {
   const [notifOn, setNotifOn] = useState<boolean>(Boolean(notif));
   const toggleNotif = () => setNotifOn(!notifOn);
+  const dispatcher = useDispatchActivities();
+  const deleteActivity = () => {
+    const payload: DeleteActivityPayload = {
+      groupId,
+      activityId: activity.id,
+    };
+    dispatcher({
+      type: 'delete_activity',
+      payload,
+    });
+  };
+
+  const { toggleOpen: toggleEditModal, setModalData: setEditData } = useModal();
 
   return (
-    <div className="flex justify-between w-full items-center">
-      <h3 className="text-lg ">{title}</h3>
-      <div onClick={toggleNotif} className="cursor-pointer">
-        {notifOn ? <Icon.Bell /> : <Icon.BellOff color="red" />}
+    <div className="flex flex-col w-full items-center">
+      <h3 className="text-lg mb-2">{title}</h3>
+      <div className=" flex space-x-1">
+        <div onClick={toggleNotif} className="cursor-pointer ">
+          {notifOn ? <Icon.Bell /> : <Icon.BellOff className="text-muted" />}
+        </div>
+        <Icon.Edit
+          className="cursor-pointer text-warning"
+          onClick={() => {
+            if (setEditData) {
+              setEditData(activity);
+            }
+            if (toggleEditModal) {
+              toggleEditModal();
+            }
+          }}
+        />
+        <Icon.Trash
+          className="cursor-pointer text-danger"
+          onClick={deleteActivity}
+        />
       </div>
+    </div>
+  );
+};
+
+interface ImageModalComponentProps {
+  image: string;
+}
+
+const ImageModalComponent: FC<ImageModalComponentProps> = ({ image }) => {
+  const [openImageModal, setOpenImageModal] = useState<boolean>(false);
+  const toggleImageModal = () => setOpenImageModal(!openImageModal);
+  const [fullScreen, setFullScreen] = useState<boolean>(false);
+
+  return (
+    <div>
+      <Modal
+        title={
+          <a className="text-link" href={image} target="_blank">
+            {image}
+          </a>
+        }
+        open={openImageModal}
+        onClickClose={toggleImageModal}
+      >
+        <div className="flex justify-center">
+          <img
+            className="object-cover object-center"
+            style={{
+              height: '50vh',
+            }}
+            src={image}
+          />
+        </div>
+        {/* Toolbox */}
+        <div className="flex space-x-4 mt-4">
+          <div>
+            <Button className="flex justify-center w-full">
+              <Icon.Image /> View Full Screen
+            </Button>
+          </div>
+        </div>
+      </Modal>
+      <Button onClick={toggleImageModal}>
+        <p className="text-grey">
+          <Icon.Image color="#797979" className="inline" /> View Image
+        </p>
+      </Button>
     </div>
   );
 };

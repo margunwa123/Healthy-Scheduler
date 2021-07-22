@@ -9,12 +9,7 @@ interface ActivityActionType extends DispatchActionType {
     | 'edit_activity'
     | 'edit_activity_group'
     | 'initiate';
-  payload?:
-    | ActivityGroup
-    | Activity
-    | ActivityPayload
-    | ActivityGroup[]
-    | DeleteGroupPayload;
+  payload?: any;
 }
 
 interface ActivitiesState {
@@ -93,12 +88,12 @@ const reducer = (
     case 'delete_activity': {
       return {
         activityGroups: state.activityGroups.map((actGroup) => {
-          const payload = action.payload as ActivityPayload;
+          const payload = action.payload as DeleteActivityPayload;
           if (payload.groupId === actGroup.id) {
             return {
               ...actGroup,
               activities: actGroup.activities.filter(
-                (activity) => activity.id !== payload.activity.id
+                (activity) => activity.id !== payload.activityId
               ),
             };
           }

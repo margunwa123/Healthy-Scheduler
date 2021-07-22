@@ -1,9 +1,11 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 
 interface PanelProps extends React.HTMLAttributes<HTMLDivElement> {
   dashedBorder?: boolean;
   shadow?: boolean;
   bgWhite?: boolean;
+  borderColor?: Variant;
+  borderSize?: number;
 }
 
 const Panel: FC<PanelProps> = ({
@@ -12,6 +14,8 @@ const Panel: FC<PanelProps> = ({
   className,
   shadow = true,
   bgWhite = true,
+  borderColor = 'muted',
+  borderSize,
   ...props
 }) => {
   return (
@@ -21,7 +25,11 @@ const Panel: FC<PanelProps> = ({
       ${dashedBorder ? 'border-dashed' : 'border-solid'} ${
         bgWhite ? 'bg-white' : ''
       } ${
-        shadow ? 'shadow-panel' : 'border border-grey-light'
+        shadow
+          ? 'shadow-panel'
+          : `${
+              borderSize ? `border-${borderSize}` : 'border'
+            } border-${borderColor}`
       } rounded-lg p-5 ${className}`}
     >
       {children}

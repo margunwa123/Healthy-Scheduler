@@ -1,4 +1,11 @@
-type Variant = 'success' | 'danger' | 'warning' | 'white' | 'muted' | 'primary';
+type Variant =
+  | 'success'
+  | 'danger'
+  | 'warning'
+  | 'white'
+  | 'muted'
+  | 'primary'
+  | 'dark';
 interface Activity {
   id: string;
   title: string;
@@ -63,6 +70,11 @@ interface ReducerDispatchAction<T = DispatchActionType> {
 type ActivityPayload = {
   groupId: string;
   activity: Activity;
+};
+
+type DeleteActivityPayload = {
+  groupId: string;
+  activityId: string;
 };
 
 type DeleteGroupPayload = {

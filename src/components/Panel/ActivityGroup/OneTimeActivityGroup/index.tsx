@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import * as Icon from 'react-feather';
 
-import AddOneTimeActivityForm from '@/components/Form/Activity/OneTime';
+import OneTimeActivityForm from '@/components/Form/Activity/OneTime';
 
 import ActivityGroupPanel from '../';
 import OneTimeActivityPanel from '../../ActivityPanel/OneTimeActivityPanel';
@@ -55,13 +55,15 @@ const OneTimeActivityGroupPanel: FC<OneTimeActivityGroupProps> = ({
         <Icon.Trash size={16} />
       </Button>
 
-      <Modal
-        title={`Add One Time Activity`}
-        open={openAddModal}
-        onClickClose={toggleOpenAddModal}
-      >
-        <AddOneTimeActivityForm groupId={id} onSubmit={toggleOpenAddModal} />
-      </Modal>
+      <div>
+        <Modal
+          title={`Add One Time Activity`}
+          open={openAddModal}
+          onClickClose={toggleOpenAddModal}
+        >
+          <OneTimeActivityForm groupId={id} onSubmit={toggleOpenAddModal} />
+        </Modal>
+      </div>
     </ActivityGroupPanel>
   );
 };
@@ -75,7 +77,7 @@ const ActivityPanels: FC<ActivityPanelsProps> = ({ activities, groupId }) => {
   return (
     <div>
       {activities.map((activity) => (
-        <OneTimeActivityPanel {...activity} />
+        <OneTimeActivityPanel {...activity} groupId={groupId} />
       ))}
       <EditOneTimeActivityModal groupId={groupId} />
     </div>

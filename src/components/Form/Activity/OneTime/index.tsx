@@ -11,7 +11,7 @@ interface AddOneTimeActivityFormProps extends FormProps {
   type?: 'add' | 'edit';
 }
 
-const AddOneTimeActivityForm: FC<AddOneTimeActivityFormProps> = ({
+const OneTimeActivityForm: FC<AddOneTimeActivityFormProps> = ({
   groupId,
   type = 'add',
   ...props
@@ -53,7 +53,6 @@ const AddOneTimeActivityForm: FC<AddOneTimeActivityFormProps> = ({
         <br />
         <textarea
           className="border outline-none px-1 py-2 rounded-md border-grey-light w-full"
-          id="description"
           name="description"
           placeholder="This is a description"
           rows={3}
@@ -62,7 +61,7 @@ const AddOneTimeActivityForm: FC<AddOneTimeActivityFormProps> = ({
       <div>
         <p className="text-xs mb-1">Notification (alarm)</p>
         <label className="mr-2">
-          <input type="radio" name="notif" value="true" /> On
+          <input type="radio" name="notif" defaultChecked value="true" /> On
         </label>
         <label>
           <input type="radio" name="notif" value="false" /> Off
@@ -83,4 +82,4 @@ const AddOneTimeActivityForm: FC<AddOneTimeActivityFormProps> = ({
   );
 };
 
-export default AddOneTimeActivityForm;
+export default OneTimeActivityForm;

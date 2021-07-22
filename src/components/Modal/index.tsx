@@ -6,7 +6,7 @@ import * as Icon from 'react-feather';
  */
 export interface ModalProps {
   open?: boolean;
-  title?: string;
+  title?: string | JSX.Element;
   onClickClose?: () => void;
 }
 
@@ -44,7 +44,7 @@ const Modal: FC<ModalProps> = ({
 };
 
 interface ModalHeaderProps {
-  title?: string;
+  title?: JSX.Element | string;
   onClickClose?: React.MouseEventHandler;
 }
 
@@ -54,7 +54,7 @@ interface ModalHeaderProps {
 const ModalHeader: FC<ModalHeaderProps> = ({ title, onClickClose }) => {
   return (
     <div className="flex justify-between items-center p-4">
-      <p className="text-xl font-semibold">{title}</p>
+      <div className="text-xl font-semibold">{title}</div>
       {!!onClickClose && (
         <Icon.X onClick={onClickClose} className="cursor-pointer" />
       )}

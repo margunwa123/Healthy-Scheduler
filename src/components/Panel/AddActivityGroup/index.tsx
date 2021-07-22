@@ -16,9 +16,10 @@ const AddActivityGroup: FC<AddActivityGroupProps> = ({ onClickAdd }) => {
         height: '315px',
       }}
       dashedBorder
+      borderColor="dark"
       bgWhite={false}
       shadow={false}
-      className="space-y-5 font-medium flex justify-center items-center hover:bg-white-darker transition-colors cursor-pointer"
+      className="space-y-5 font-medium flex justify-center items-center hover:bg-primary-light transition-colors cursor-pointer"
       onClick={onClickAdd}
     >
       + Add activity group

@@ -4,10 +4,11 @@ import {
   useActivities,
   useDispatchActivities,
 } from '@/reducers/ActivityReducer';
-import '@styles/globals.css';
+import '@styles/style.css';
 
 import { AppProps } from 'next/dist/next-server/lib/router/router';
 import { FC, useEffect } from 'react';
+import 'moment/locale/id';
 
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   const dispatchActivity = useDispatchActivities();
@@ -33,17 +34,11 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   return <Component {...pageProps} />;
 };
 
+const initialActivityGroups: ActivityGroup[] = [];
+
 const AppWithProviders: FC<AppProps> = (props) => {
   return (
-    <ActivitiesProvider
-      activityGroups={[
-        {
-          title: 'Every 1 hour',
-          activities: [],
-          type: 'hourly',
-        },
-      ]}
-    >
+    <ActivitiesProvider activityGroups={initialActivityGroups}>
       <MyApp {...props} />
     </ActivitiesProvider>
   );

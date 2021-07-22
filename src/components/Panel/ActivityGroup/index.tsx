@@ -17,7 +17,7 @@ const ActivityGroupPanel: FC<ActivityGroupProps> = ({
         width: '325px',
         minWidth: '325px',
       }}
-      className="space-y-5 mr-5 my-4 h-min-content"
+      className="space-y-5 mr-5 mb-4 h-min-content"
     >
       <div className="flex  space-x-2 w-full justify-center items-center">
         {titleIcon}
