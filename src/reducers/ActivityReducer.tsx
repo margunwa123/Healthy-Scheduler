@@ -1,3 +1,4 @@
+import { isActivity } from '@/helpers/validator';
 import React, { createContext, FC, useContext, useReducer } from 'react';
 
 interface ActivityActionType extends DispatchActionType {
@@ -76,6 +77,9 @@ const reducer = (
       return {
         activityGroups: state.activityGroups.map((actGroup) => {
           const payload = action.payload as ActivityPayload;
+          if (!payload || !isActivity(payload.activity)) {
+            return actGroup;
+          }
           if (payload.groupId === actGroup.id) {
             return {
               ...actGroup,

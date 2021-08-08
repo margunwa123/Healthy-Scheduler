@@ -20,7 +20,9 @@ export const FormInput: FC<FormInputProps> = ({
       )}
       <input
         required={required}
-        className={`w-full px-2 py-3 border border-grey-light rounded-lg outline-none ${className}`}
+        className={`${
+          props.type !== 'checkbox' ? 'w-full' : ''
+        } px-2 py-3 border border-grey-light rounded-lg outline-none ${className}`}
         {...props}
       />
     </div>

@@ -9,12 +9,11 @@ type Variant =
 type Activity = {
   id: string;
   title: string;
-  notif?: boolean;
+  type: 'one-time' | 'daily';
   description?: string;
-  image?: string;
+  alarm?: boolean;
   url?: string;
   deadline?: number;
-  type: 'one-time' | 'daily';
 };
 
 interface ScheduledActivity extends Activity {}

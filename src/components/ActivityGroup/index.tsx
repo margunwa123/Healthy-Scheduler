@@ -3,6 +3,7 @@ import { useDispatchActivities } from '@/reducers/ActivityReducer';
 import React, { FC, useState } from 'react';
 
 import Panel from '../../lib/Panel';
+import CreateActivityModal from '../Activity/Modal/Create';
 
 interface ActivityGroupProps extends ActivityGroup {}
 
@@ -50,6 +51,11 @@ const ActivityGroup: FC<ActivityGroupProps> = ({
           onCreate={toggleCreateActivityModal}
           onEdit={toggleEditActivityModal}
           onDelete={deleteGroup}
+        />
+        <CreateActivityModal
+          open={openCreateActivityModal}
+          groupId={id}
+          onClickClose={toggleCreateActivityModal}
         />
       </div>
       {children}

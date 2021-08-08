@@ -7,10 +7,22 @@ import FormInput from '@/lib/Form/FormInput';
 import { useDispatchActivities } from '@/reducers/ActivityReducer';
 import Modal, { ModalProps } from '@/lib/Modal';
 
+const CreateActivityGroupModal: FC<ModalProps> = ({ onClickClose, open }) => {
+  return (
+    <Modal
+      open={open}
+      onClickClose={onClickClose}
+      title="Create Activity Group"
+    >
+      <CreateActivityGroupForm onSubmit={onClickClose} />
+    </Modal>
+  );
+};
+
 const CreateActivityGroupForm: FC<FormProps> = ({ ...props }) => {
   const dispatchActivity = useDispatchActivities();
 
-  const createOneTimeActivityGroup: (item: AnyObject) => void = (item) => {
+  const createActivityGroup: (item: AnyObject) => void = (item) => {
     dispatchActivity({
       type: 'add_activity_group',
       payload: {
@@ -23,7 +35,7 @@ const CreateActivityGroupForm: FC<FormProps> = ({ ...props }) => {
   };
 
   return (
-    <Form onSubmitCallbackWithData={createOneTimeActivityGroup} {...props}>
+    <Form onSubmitCallbackWithData={createActivityGroup} {...props}>
       <FormInput name="title" label="Title" required />
       <FormInput name="description" label="Description" required />
       {/* Color selection */}
@@ -70,20 +82,6 @@ const CreateActivityGroupForm: FC<FormProps> = ({ ...props }) => {
 
       <Button>Create</Button>
     </Form>
-  );
-};
-
-const CreateActivityGroupModal: FC<ModalProps> = ({ onClickClose, open }) => {
-  const [groupType, setGroupType] = useState<ActivityGroupType>('one-time');
-
-  return (
-    <Modal
-      open={open}
-      onClickClose={onClickClose}
-      title="Create Activity Group"
-    >
-      <CreateActivityGroupForm onSubmit={onClickClose} />
-    </Modal>
   );
 };
 
