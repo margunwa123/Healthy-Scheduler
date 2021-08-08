@@ -6,7 +6,7 @@ type Variant =
   | 'muted'
   | 'primary'
   | 'dark';
-interface Activity {
+type Activity = {
   id: string;
   title: string;
   notif?: boolean;
@@ -14,7 +14,8 @@ interface Activity {
   image?: string;
   url?: string;
   deadline?: number;
-}
+  type: 'one-time' | 'daily';
+};
 
 interface ScheduledActivity extends Activity {}
 
@@ -29,31 +30,9 @@ type ActivityGroupType = 'daily' | 'hourly' | 'one-time';
 interface ActivityGroup {
   id: string;
   title: string;
-  type: ActivityGroupType;
   activities: Activity[];
-  alarmType?: string;
-}
-
-// all in milliseconds
-interface HourlyActivityGroup extends ActivityGroup {
-  type: 'hourly';
-  interval: number;
-  activities: ScheduledActivity[];
-  from: number;
-  to: number;
-  daysActive: Day[] | 'everyday';
-}
-
-interface DailyActivityGroup extends ActivityGroup {
-  type: 'daily';
-  daysActive: Day[] | 'everyday';
-  activities: ScheduledActivity[];
-  time: number;
-}
-
-interface OneTimeActivityGroup extends ActivityGroup {
-  type: 'one-time';
-  activities: OneTimeActivity[];
+  description?: string;
+  color: string;
 }
 
 // reducer action type

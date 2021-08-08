@@ -19,6 +19,7 @@
       "public/*": ["./public/*"],
       "@styles/*": ["./src/assets/css/*"],
       "@components/*": ["./src/components/*"],
+      "@lib/*": ["./src/lib/*"],
       "public": ["./public/*"]
     }
   },

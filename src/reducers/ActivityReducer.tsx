@@ -50,9 +50,10 @@ const reducer = (
       };
     }
     case 'delete_activity_group': {
+      // payload is string
       return {
         activityGroups: state.activityGroups.filter(
-          (actGroup) => actGroup.id !== (action.payload as ActivityGroup).id
+          (actGroup) => actGroup.id !== (action.payload as string)
         ),
       };
     }

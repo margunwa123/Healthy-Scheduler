@@ -1,0 +1,38 @@
+input[type='radio'].input-color + label span {
+  @apply border-2;
+  transition: background 0.2s, transform 0.2s;
+}
+
+input[type='radio']:checked.input-color + label span {
+  @apply shadow-inset scale-125 transform;
+}
+
+input[type='radio'].input-color + label span:hover,
+input[type='radio'].input-color + label:hover span {
+  @apply transform scale-125;
+}
+
+/* Green */
+input[type='radio'].input-color.input-green + label span {
+  @apply bg-green border-green;
+}
+
+input[type='radio']:checked.input-color.input-green + label {
+  @apply text-green;
+}
+
+input[type='radio'].input-color.input-red + label span {
+  @apply bg-red border-red;
+}
+
+input[type='radio']:checked.input-color.input-red + label {
+  @apply text-red;
+}
+
+input[type='radio'].input-color.input-orange + label span {
+  @apply bg-orange border-orange;
+}
+
+input[type='radio']:checked.input-color.input-orange + label {
+  @apply text-orange;
+}

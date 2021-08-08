@@ -1,8 +1,4 @@
 import React, { FC, useState } from 'react';
-import Image from 'next/image';
-import headerWave from 'public/svg/header_wave.svg';
-import * as Icon from 'react-feather';
-import useLocalStorage from '@/hooks/useLocalStorage';
 import PulseHelpButton from '@/components/PulseHelpButton';
 
 interface HeaderProps {}

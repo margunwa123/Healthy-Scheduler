@@ -13,10 +13,6 @@ module.exports = {
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
-    boxShadow: {
-      panel: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-    },
-
     colors: {
       link: '#0054B7',
       green: {
@@ -99,6 +95,10 @@ module.exports = {
       },
       height: {
         'min-content': 'min-content',
+      },
+      boxShadow: {
+        panel: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        inset: '0px 0px 0px 2px white inset',
       },
       zIndex: {
         '-1': '-1',

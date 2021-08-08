@@ -5,6 +5,7 @@ import {
   useDispatchActivities,
 } from '@/reducers/ActivityReducer';
 import '@styles/style.css';
+import '@styles/form.css';
 
 import { AppProps } from 'next/dist/next-server/lib/router/router';
 import { FC, useEffect } from 'react';
