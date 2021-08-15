@@ -26,6 +26,7 @@ const Modal: FC<ModalProps> = ({
       } fixed flex justify-center items-center top-0 left-0 w-screen h-screen z-50"`}
       style={{
         background: 'rgba(0,0,0,0.4)',
+        margin: '0',
       }}
     >
       <div

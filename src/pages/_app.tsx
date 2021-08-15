@@ -10,6 +10,7 @@ import '@styles/form.css';
 import { AppProps } from 'next/dist/next-server/lib/router/router';
 import { FC, useEffect } from 'react';
 import 'moment/locale/id';
+import { askNotificationPermission } from '@/helpers/notification';
 
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   const dispatchActivity = useDispatchActivities();
@@ -18,6 +19,10 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
     'activity-groups',
     []
   );
+
+  useEffect(() => {
+    askNotificationPermission();
+  }, []);
 
   useEffect(() => {
     if (actGroups && actGroups !== []) {

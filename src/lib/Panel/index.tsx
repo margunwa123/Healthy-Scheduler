@@ -1,6 +1,6 @@
 import React, { FC, useMemo } from 'react';
 
-interface PanelProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface PanelProps extends React.HTMLAttributes<HTMLDivElement> {
   dashedBorder?: boolean;
   shadow?: boolean;
   bgWhite?: boolean;
@@ -32,12 +32,14 @@ const Panel: FC<PanelProps> = ({
           : `${
               borderSize ? `border-${borderSize}` : 'border'
             } border-${borderColor}`
-      } rounded-lg ${className}`}
+      } rounded-lg p-5 relative ${className}`}
     >
       {topColor && (
-        <div className={`w-full h-8 bg-${topColor} rounded-t-lg`}></div>
+        <div
+          className={`w-full h-8 absolute top-0 left-0 bg-${topColor} rounded-t-lg`}
+        ></div>
       )}
-      <div className="p-5">{children}</div>
+      {children}
     </div>
   );
 };

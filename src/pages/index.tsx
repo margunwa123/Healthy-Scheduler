@@ -27,7 +27,7 @@ const Home: NextPage = () => {
       </Head>
       <div className="pl-4 lg:pl-default flex pt-4 lg:pt-default flex-wrap pb-5">
         {activityGroups.map((activityGroup, idx) => (
-          <ActivityGroup {...activityGroup} />
+          <ActivityGroup key={activityGroup.id} {...activityGroup} />
         ))}
         <AddGroupButton toggleOpenModal={toggleOpenModal} />
         <CreateActivityGroupModal

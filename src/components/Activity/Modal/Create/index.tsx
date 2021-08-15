@@ -7,6 +7,7 @@ import FormInput from '@/lib/Form/FormInput';
 import { useDispatchActivities } from '@/reducers/ActivityReducer';
 import Modal, { ModalProps } from '@/lib/Modal';
 import { isActivity } from '@/helpers/validator';
+import { formatHHMMSSToMillis } from '@/helpers/time';
 
 interface CreateActivityModalProps extends ModalProps {
   groupId: string;
@@ -35,11 +36,18 @@ const CreateActivityForm: FC<CreateActivityFormProps> = ({
   const dispatchActivity = useDispatchActivities();
 
   const createActivity = (item: AnyObject) => {
+    item.id = v4();
+    item.time = formatHHMMSSToMillis(item.time as string);
+    console.log(item);
+    if (!isActivity(item)) {
+      return;
+    }
+
     dispatchActivity({
       type: 'add_activity',
       payload: {
         groupId,
-        activity: { ...item, id: v4() },
+        activity: { ...item },
       },
     });
   };
@@ -60,6 +68,7 @@ const CreateActivityForm: FC<CreateActivityFormProps> = ({
         </select>
       </div>
       <FormInput name="title" label="Title" placeholder="Make Food" required />
+      <FormInput name="time" label="Time" placeholder="00:00:00" required />
       <FormInput
         name="description"
         label="Description"
@@ -73,7 +82,6 @@ const CreateActivityForm: FC<CreateActivityFormProps> = ({
         defaultChecked={false}
       />
       <FormInput name="url" label="URL" placeholder="www.google.com" />
-      <FormInput name="deadline" label="Deadline" placeholder="00:00:00" />
 
       <Button>Create</Button>
     </Form>

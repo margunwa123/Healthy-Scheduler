@@ -13,13 +13,13 @@ type Activity = {
   description?: string;
   alarm?: boolean;
   url?: string;
-  deadline?: number;
+  time: number;
 };
 
 interface ScheduledActivity extends Activity {}
 
 interface OneTimeActivity extends Activity {
-  deadline: number;
+  time: number;
 }
 
 type Day = 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun';

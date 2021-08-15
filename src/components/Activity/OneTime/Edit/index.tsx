@@ -25,8 +25,8 @@ const EditOneTimeActivityModal: FC<EditOneTimeActivityModalProps> = ({
       groupId,
       activity: {
         ...(item as Activity),
-        deadline: formatHHMMSSToMillis(item.deadline),
-        notif: item.notif && item.notif === 'true' ? true : false,
+        time: formatHHMMSSToMillis(item.deadline),
+        alarm: item.alarm && item.alarm === 'true' ? true : false,
       },
     };
     dispatchActivity({
